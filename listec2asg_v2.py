@@ -24,7 +24,6 @@ def describe_instances_and_asgs(session):
                     'Private Ip': privateip,
                     'InstanceType': InstanceType_id,
                     'Project': tags['Project'],
-                    # 'Deployment': tags['Deployment'],
                     **tags
                 })
 
@@ -37,7 +36,6 @@ def describe_instances_and_asgs(session):
             asg_data.append({
                 'ASG Name': asg_name,
                 'Project': tags['Project'],
-                # 'Application Vendor': tags['Application Vendor'],
                 'Deployment': tags['Deployment'],
                 'Platform Name': tags['Platform Name'],
                 **tags
