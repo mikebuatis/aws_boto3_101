@@ -15,9 +15,11 @@ def describe_instances_and_asgs(session):
         for reservation in response['Reservations']:
             for instance in reservation['Instances']:
                 instance_id = instance['InstanceId']
+                privateip = instance['PrivateIpAddress']
                 tags = {tag['Key']: tag['Value'] for tag in instance.get('Tags', [])}
                 instance_data.append({
                     'Instance ID': instance_id,
+                    'Private Ip': privateip,
                     **tags
                 })
 
