@@ -8,7 +8,7 @@ def describe_instances_and_asgs(session):
         # Create EC2 and ASG clients using the provided session
         ec2_client = session.client('ec2')
         asg_client = session.client('autoscaling')
-
+  
         # Describe EC2 instances
         instance_data = []
         response = ec2_client.describe_instances()
@@ -16,10 +16,15 @@ def describe_instances_and_asgs(session):
             for instance in reservation['Instances']:
                 instance_id = instance['InstanceId']
                 privateip = instance['PrivateIpAddress']
-                tags = {tag['Key']: tag['Value'] for tag in instance.get('Tags', [])}
+                InstanceType_id = instance['InstanceType']
+                tags = {tag['Key']: tag['Value'] for tag in instance.get('Tags',[])}
                 instance_data.append({
+                    'Name': tags['Name'],
                     'Instance ID': instance_id,
                     'Private Ip': privateip,
+                    'InstanceType': InstanceType_id,
+                    'Project': tags['Project'],
+                    # 'Deployment': tags['Deployment'],
                     **tags
                 })
 
@@ -31,6 +36,10 @@ def describe_instances_and_asgs(session):
             tags = {tag['Key']: tag['Value'] for tag in asg.get('Tags', [])}
             asg_data.append({
                 'ASG Name': asg_name,
+                'Project': tags['Project'],
+                # 'Application Vendor': tags['Application Vendor'],
+                'Deployment': tags['Deployment'],
+                'Platform Name': tags['Platform Name'],
                 **tags
             })
 
